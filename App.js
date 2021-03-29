@@ -1,22 +1,33 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
 import { Productsreducer } from "./store/products/reducer";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { ProductsStackNavigator } from "./navigation/ShopNavigator";
+import AppLoading from "expo-app-loading";
+import { useFonts } from "expo-font";
+import { addToCardreducer } from "./store/card/reducer";
+
 const rootReducer = combineReducers({
   products: Productsreducer,
+  card: addToCardreducer,
 });
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeWithDevTools());
 export default function App() {
-  return (
-    <Provider store={store}>
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
-      </View>
-    </Provider>
-  );
+  let [fontsLoaded] = useFonts({
+    OSB: require("./assets/fonts/OpenSans-Bold.ttf"),
+    OSR: require("./assets/fonts/OpenSans-Regular.ttf"),
+  });
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
+    return (
+      <Provider store={store}>
+        <ProductsStackNavigator />
+      </Provider>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
