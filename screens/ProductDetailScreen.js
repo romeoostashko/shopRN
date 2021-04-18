@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import * as cardActions from "../store/card/actions";
+import * as cardActions from "../store/cart/actions";
 import {
   StyleSheet,
   Text,

@@ -7,11 +7,11 @@ import { StyleSheet } from "react-native";
 import { ProductsStackNavigator } from "./navigation/ShopNavigator";
 import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
-import { addToCardreducer } from "./store/card/reducer";
+import { addToCardreducer } from "./store/cart/reducer";
 
 const rootReducer = combineReducers({
   products: Productsreducer,
-  card: addToCardreducer,
+  cart: addToCardreducer,
 });
 const store = createStore(rootReducer, composeWithDevTools());
 export default function App() {
