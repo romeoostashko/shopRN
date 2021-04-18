@@ -1,14 +1,28 @@
 import React from "react";
-import { StyleSheet, Text, View, FlatList, Button } from "react-native";
-import { useSelector } from "react-redux";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Button,
+  TouchableOpacity,
+} from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import { theme } from "../theme";
+import { Ionicons } from "@expo/vector-icons";
+import { removeFromCart } from "../store/cart/actions";
 
 export const CartScreen = () => {
+  const dispatch = useDispatch();
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => {
     const cartArrayItems = Object.entries(state.cart.items);
     return cartArrayItems;
   });
+
+  cartItems.sort();
+
+  //console.log("cartItem ", cartItems);
 
   return (
     <View style={styles.screen}>
@@ -27,7 +41,7 @@ export const CartScreen = () => {
         renderItem={({ item }) => {
           return (
             <View style={styles.items}>
-              <View style={{ flex: 0.7 }}>
+              <View style={{ flex: 0.6 }}>
                 <Text>{item[1].productTitle}</Text>
               </View>
               <View style={{ flex: 0.2 }}>
@@ -38,6 +52,14 @@ export const CartScreen = () => {
               <View style={{ flex: 0.1 }}>
                 <Text style={{ textAlign: "right" }}>{item[1].quantety}</Text>
               </View>
+              <TouchableOpacity
+                onPress={() => {
+                  dispatch(removeFromCart(item[0]));
+                }}
+                style={{ marginLeft: 10 }}
+              >
+                <Ionicons name="md-trash" size={16} color="red" />
+              </TouchableOpacity>
             </View>
           );
         }}
