@@ -39,6 +39,15 @@ const styles = StyleSheet.create({});
 ProductOverviewScreen.navigationOptions = ({ navigation }) => {
   return {
     title: "All products",
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          item="Menu"
+          iconName="md-menu"
+          onPress={() => navigation.toggleDrawer()}
+        ></Item>
+      </HeaderButtons>
+    ),
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item

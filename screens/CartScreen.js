@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import { addOrderAction } from "../store/orders/actions";
 import { theme } from "../theme";
 import { Ionicons } from "@expo/vector-icons";
 import { removeFromCart } from "../store/cart/actions";
@@ -30,7 +31,13 @@ export const CartScreen = () => {
         <Text style={styles.textAmount}>
           Total: ${cartTotalAmount.toFixed(2)}
         </Text>
-        <Button title="order now" disabled={cartItems.length === 0} />
+        <Button
+          title="order now"
+          disabled={cartItems.length === 0}
+          onPress={() => {
+            dispatch(addOrderAction(cartItems, cartTotalAmount.toFixed(2)));
+          }}
+        />
       </View>
       <FlatList
         data={cartItems}
@@ -83,3 +90,5 @@ const styles = StyleSheet.create({
   },
   textAmount: { fontFamily: theme.font["OpenSans-Bold"], fontSize: 20 },
 });
+
+CartScreen.navigationOptions = { title: "Cart" };

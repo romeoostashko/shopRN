@@ -8,10 +8,12 @@ import { ProductsStackNavigator } from "./navigation/ShopNavigator";
 import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
 import { addToCardreducer } from "./store/cart/reducer";
+import { orderReducer } from "./store/orders/reduicer";
 
 const rootReducer = combineReducers({
   products: Productsreducer,
   cart: addToCardreducer,
+  orders: orderReducer,
 });
 const store = createStore(rootReducer, composeWithDevTools());
 export default function App() {
